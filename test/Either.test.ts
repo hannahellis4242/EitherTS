@@ -121,4 +121,11 @@ describe("Either",()=>{
             expect(swapped.getOrThrow()).toBe(42)
         })
     })
+    describe("promisify",()=>{
+        test("left goes to resolve",async ()=>{
+            const value = left(42);
+            const result = await value.promisify();
+            expect(result).toBe(42);
+        })
+    })
 })
