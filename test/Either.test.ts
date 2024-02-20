@@ -51,4 +51,12 @@ describe("Either",()=>{
             expect(result.getOr("hello")).toBe("42");
         })
     })
+    describe("map",()=>{
+        test("mapping a left gives a left",()=>{
+            const value = left(42);
+            const result = value.map((x)=>x*x);
+            expect(result).toBeInstanceOf(Left);
+            expect(result.getOrThrow()).toBe(1764);
+        })
+    })
 })

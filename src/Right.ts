@@ -3,6 +3,9 @@ import Left from "./Left";
 
 export default class Right<A,B> implements Either<A,B>{
     constructor(private data:B){}
+    map(fn: (x: A) => A): Either<A, B> {
+        throw new Error("Method not implemented.");
+    }
     swap(): Either<B, A> {
         return new Left<B,A>(this.data);
     }

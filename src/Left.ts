@@ -12,6 +12,9 @@ export default class Left<A,B>implements Either<A,B>{
     getOr(_:A){
         return this.data;
     }
+    map(fn:(x:A)=>A):Either<A,B>{
+        return new Left(fn(this.data));
+    }
 }
 
 export const left=<A,B>(x:A):Either<A,B>=>new Left<A,B>(x);
