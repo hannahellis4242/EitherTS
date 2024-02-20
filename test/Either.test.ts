@@ -58,5 +58,14 @@ describe("Either",()=>{
             expect(result).toBeInstanceOf(Left);
             expect(result.getOrThrow()).toBe(1764);
         })
+        test("mapping a right gives back the same right",()=>{
+            const value = right<number,string>("42");
+            const result = value.map((x)=>x*x);
+            expect(result).toBeInstanceOf(Right);
+            expect(result).toBe(value);
+            expect(result.getOr(0)).toBe(0);
+            const swapped = value.swap();
+            expect(swapped.getOrThrow()).toBe("42");
+        })
     })
 })
