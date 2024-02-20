@@ -1,30 +1,5 @@
-interface Either<A,B>{
-    getOr(_:A):A;
-    getOrThrow():A;
-}
-
-class Left<A,B>implements Either<A,B>{
-    constructor(private data:A){}
-    getOrThrow(): A {
-        return this.data;
-    }
-    getOr(_:A){
-        return this.data;
-    }
-}
-
-class Right<A,B> implements Either<A,B>{
-    constructor(private data:B){}
-    getOrThrow(): A {
-        throw new Error("Either : Attempting to get a Left value from a Right instance");
-    }
-    getOr(x: A): A {
-        return x;
-    }
-}
-
-const left=<A,B>(x:A):Either<A,B>=>new Left<A,B>(x);
-const right=<A,B>(x:B):Either<A,B>=>new Right<A,B>(x);
+import Left,{left} from "../src/Left";
+import Right,{right} from "../src/Right";
 
 describe("Either",()=>{
     describe("Construction",()=>{
