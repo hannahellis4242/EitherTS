@@ -169,5 +169,25 @@ describe("Either",()=>{
             expect(fn).toHaveBeenCalledTimes(1);
             expect(fn).toHaveBeenCalledWith(99);
         })
+        test("teeBoth on a left",()=>{
+            const value = left(99);
+            const fn = jest.fn();
+            const fn2 = jest.fn();
+            const result = value.teeBoth(fn,fn2);
+            expect(result).toBe(value);
+            expect(fn).toHaveBeenCalledTimes(1);
+            expect(fn).toHaveBeenCalledWith(99);
+            expect(fn2).not.toHaveBeenCalled();
+        })
+        test("teeRight on a right",()=>{
+            const value = right(99);
+            const fn = jest.fn();
+            const fn2 = jest.fn();
+            const result = value.teeBoth(fn,fn2);
+            expect(result).toBe(value);
+            expect(fn2).toHaveBeenCalledTimes(1);
+            expect(fn2).toHaveBeenCalledWith(99);
+            expect(fn).not.toHaveBeenCalled();
+        })
     })
 })
