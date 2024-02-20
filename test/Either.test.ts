@@ -147,5 +147,12 @@ describe("Either",()=>{
             expect(fn).toHaveBeenCalledTimes(1);
             expect(fn).toHaveBeenCalledWith(99);
         })
+        test("tee on a right",()=>{
+            const value = right(99);
+            const fn = jest.fn();
+            const result = value.tee(fn);
+            expect(result).toBe(value);
+            expect(fn).not.toHaveBeenCalled();
+        })
     })
 })
