@@ -37,4 +37,18 @@ describe("Either",()=>{
             })
         })
     })
+    describe("swap",()=>{
+        test("swapping a left gives a right",()=>{
+            const value = left<number,string>(42);
+            const result = value.swap();
+            expect(result).toBeInstanceOf(Right);
+            expect(result.getOr("hello")).toBe("hello");
+        })
+        test("swapping a right gives a left",()=>{
+            const value = right<number,string>("42");
+            const result = value.swap();
+            expect(result).toBeInstanceOf(Left);
+            expect(result.getOr("hello")).toBe("42");
+        })
+    })
 })

@@ -1,7 +1,11 @@
 import Either from "./Either";
+import Left from "./Left";
 
 export default class Right<A,B> implements Either<A,B>{
     constructor(private data:B){}
+    swap(): Either<B, A> {
+        return new Left<B,A>(this.data);
+    }
     getOrThrow(): A {
         throw new Error("Either : Attempting to get a Left value from a Right instance");
     }
