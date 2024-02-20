@@ -3,6 +3,9 @@ import Right from "./Right";
 
 export default class Left<A,B>implements Either<A,B>{
     constructor(private data:A){}
+    then(fn: (x: A) => Either<A, B>): Either<A, B> {
+        return fn(this.data);
+    }
     swap(): Either<B, A> {
         return new Right<B,A>(this.data);
     }
@@ -12,7 +15,7 @@ export default class Left<A,B>implements Either<A,B>{
     getOr(_:A){
         return this.data;
     }
-    map(fn:(x:A)=>A):Either<A,B>{
+    map<C>(fn:(x:A)=>C):Either<C,B>{
         return new Left(fn(this.data));
     }
 }
