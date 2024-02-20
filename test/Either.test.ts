@@ -24,6 +24,12 @@ describe("Either",()=>{
                 const result = value.getOr(0);
                 expect(result).toBe(0);
             })
+            test("getting a left value from a left is the same value",()=>{
+                const obj = {someStuff:"stuff"};
+                const value = left<object,string>(obj);
+                const result = value.getOr({});
+                expect(result).toBe(obj);
+            })
         })
         describe("getOrThrow",()=>{
             test("getting a left value from a left",()=>{
@@ -65,6 +71,22 @@ describe("Either",()=>{
             expect(result.getOr(0)).toBe(0);
             const swapped = value.swap();
             expect(swapped.getOrThrow()).toBe("42");
+        })
+        test("mapping a left gives a left with an object",()=>{
+            const wrapped = {value:52,message:"stuff"};
+            const value = left(wrapped);
+            const result = value.map((x)=>x.message);
+            expect(result).toBeInstanceOf(Left);
+            expect(result.getOrThrow()).toBe(wrapped.message);
+        })
+        test("mapping a right gives back a new right but keeps ref to object",()=>{
+            const wrapped = {value:52,message:"stuff"};
+            const value = right<number,object>(wrapped);
+            const result = value.map((x)=>x*x);
+            expect(result).toBeInstanceOf(Right);
+            expect(result.getOr(0)).toBe(0);
+            const swapped = value.swap();
+            expect(swapped.getOrThrow()).toBe(wrapped);
         })
     })
     describe("then",()=>{
