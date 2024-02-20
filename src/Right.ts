@@ -17,8 +17,8 @@ export default class Right<A,B> implements Either<A,B>{
     promisify(): Promise<A> {
         return Promise.reject(this.data);
     }
-    then(_: (x: A) => Either<A, B>): Either<A, B> {
-        return this;
+    then<C>(_: (x: A) => Either<C, B>): Either<C, B> {
+        return new Right(this.data);
     }
     map<C>(_: (x: A) => C): Either<C, B> {
         return new Right<C,B>(this.data);

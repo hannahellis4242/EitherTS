@@ -6,7 +6,7 @@ export default class Right<A, B> implements Either<A, B> {
     teeRight(fn: (a: B) => void): Either<A, B>;
     tee(_: (x: A) => void): Either<A, B>;
     promisify(): Promise<A>;
-    then(_: (x: A) => Either<A, B>): Either<A, B>;
+    then<C>(_: (x: A) => Either<C, B>): Either<C, B>;
     map<C>(_: (x: A) => C): Either<C, B>;
     swap(): Either<B, A>;
     getOrThrow(): A;
