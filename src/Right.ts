@@ -4,7 +4,7 @@ import Left from "./Left";
 export default class Right<A,B> implements Either<A,B>{
     constructor(private data:B){}
     promisify(): Promise<A> {
-        throw new Error("Method not implemented.");
+        return Promise.reject(this.data);
     }
     then(_: (x: A) => Either<A, B>): Either<A, B> {
         return this;
