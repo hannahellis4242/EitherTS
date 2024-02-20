@@ -3,6 +3,10 @@ import Left from "./Left";
 
 export default class Right<A,B> implements Either<A,B>{
     constructor(private data:B){}
+    teeRight(fn: (a: B) => void): Either<A, B> {
+        fn(this.data);
+        return this;
+    }
     tee(_: (x: A) => void): Either<A, B> {
         return this;
     }
