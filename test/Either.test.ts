@@ -32,10 +32,15 @@ describe("Either",()=>{
     })
     describe("getting",()=>{
         describe("getOr",()=>{
-            describe("getting a left value from a left",()=>{
+            test("getting a left value from a left",()=>{
                 const value = left<number,string>(42);
                 const result = value.getOr(0);
                 expect(result).toBe(42);
+            })
+            test("getting a left value from a right",()=>{
+                const value = right<number,string>("42");
+                const result = value.getOr(0);
+                expect(result).toBe(0);
             })
         })
     })
