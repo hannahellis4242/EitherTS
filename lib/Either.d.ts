@@ -3,7 +3,7 @@ export default interface Either<A, B> {
     getOrThrow(): A;
     swap(): Either<B, A>;
     map<C>(fn: (x: A) => C): Either<C, B>;
-    then(fn: (x: A) => Either<A, B>): Either<A, B>;
+    then<C>(fn: (x: A) => Either<C, B>): Either<C, B>;
     promisify(): Promise<A>;
     tee(fn: (x: A) => void): Either<A, B>;
     teeRight(fn: (a: B) => void): Either<A, B>;
