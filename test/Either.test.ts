@@ -138,4 +138,14 @@ describe("Either",()=>{
             }
         })
     })
+    describe("tee",()=>{
+        test("tee on a left",()=>{
+            const value = left(99);
+            const fn = jest.fn();
+            const result = value.tee(fn);
+            expect(result).toBe(value);
+            expect(fn).toHaveBeenCalledTimes(1);
+            expect(fn).toHaveBeenCalledWith(99);
+        })
+    })
 })

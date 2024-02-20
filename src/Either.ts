@@ -5,4 +5,5 @@ export default interface Either<A,B>{
     map<C>(fn:(x:A)=>C):Either<C,B>;
     then(fn:(x:A)=>Either<A,B>):Either<A,B>;
     promisify():Promise<A>;
+    tee(fn:(x:A)=>void):Either<A,B>;
 }
