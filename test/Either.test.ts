@@ -1,9 +1,13 @@
 interface Either<A,B>{
     getOr(_:A):A;
+    getOrThrow():A;
 }
 
 class Left<A,B>implements Either<A,B>{
     constructor(private data:A){}
+    getOrThrow(): A {
+        return this.data;
+    }
     getOr(_:A){
         return this.data;
     }
@@ -11,6 +15,9 @@ class Left<A,B>implements Either<A,B>{
 
 class Right<A,B> implements Either<A,B>{
     constructor(private data:B){}
+    getOrThrow(): A {
+        throw new Error("Either : Attempting to get a Left value from a Right instance");
+    }
     getOr(x: A): A {
         return x;
     }
@@ -41,6 +48,17 @@ describe("Either",()=>{
                 const value = right<number,string>("42");
                 const result = value.getOr(0);
                 expect(result).toBe(0);
+            })
+        })
+        describe("getOrThrow",()=>{
+            test("getting a left value from a left",()=>{
+                const value = left<number,string>(42);
+                const result = value.getOrThrow();
+                expect(result).toBe(42);
+            })
+            test("getting a left value from a right",()=>{
+                const value = right<number,string>("42");
+                expect(()=>value.getOrThrow()).toThrow(Error("Either : Attempting to get a Left value from a Right instance"));
             })
         })
     })
