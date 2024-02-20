@@ -4,4 +4,5 @@ export default interface Either<A, B> {
     swap(): Either<B, A>;
     map<C>(fn: (x: A) => C): Either<C, B>;
     then(fn: (x: A) => Either<A, B>): Either<A, B>;
+    promisify(): Promise<A>;
 }

@@ -2,6 +2,7 @@ import Either from "./Either";
 export default class Left<A, B> implements Either<A, B> {
     private data;
     constructor(data: A);
+    promisify(): Promise<A>;
     then(fn: (x: A) => Either<A, B>): Either<A, B>;
     swap(): Either<B, A>;
     getOrThrow(): A;

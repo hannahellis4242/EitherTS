@@ -3,6 +3,9 @@ import Right from "./Right";
 
 export default class Left<A,B>implements Either<A,B>{
     constructor(private data:A){}
+    promisify(): Promise<A> {
+        return Promise.resolve(this.data);
+    }
     then(fn: (x: A) => Either<A, B>): Either<A, B> {
         return fn(this.data);
     }

@@ -121,4 +121,21 @@ describe("Either",()=>{
             expect(swapped.getOrThrow()).toBe(42)
         })
     })
+    describe("promisify",()=>{
+        test("left goes to resolve",async ()=>{
+            const value = left(42);
+            const result = await value.promisify();
+            expect(result).toBe(42);
+        })
+        test("right goes to reject",async()=>{
+            const value = right("Error");
+            try{
+                const result = await value.promisify();
+                fail(`got result ${result}`);
+            }
+            catch(e){
+                expect(e).toBe("Error");
+            }
+        })
+    })
 })
