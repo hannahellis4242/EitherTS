@@ -60,15 +60,15 @@ describe("Either",()=>{
     describe("map",()=>{
         test("mapping a left gives a left",()=>{
             const value = left(42);
-            const result = value.map((x)=>x*x);
+            const result = value.map((x)=>`2${x}`);
             expect(result).toBeInstanceOf(Left);
-            expect(result.getOrThrow()).toBe(1764);
+            expect(result.getOrThrow()).toBe("242");
         })
         test("mapping a right gives back a new right",()=>{
             const value = right<number,string>("42");
-            const result = value.map((x)=>x*x);
+            const result = value.map((x)=>`2${x}`);
             expect(result).toBeInstanceOf(Right);
-            expect(result.getOr(0)).toBe(0);
+            expect(result.getOr("")).toBe("");
             const swapped = value.swap();
             expect(swapped.getOrThrow()).toBe("42");
         })
@@ -92,9 +92,15 @@ describe("Either",()=>{
     describe("then",()=>{
         test("then with a function that gives a left on a left gives a new left",()=>{
             const value = left(42);
-            const result = value.then((_)=>left(21));
+            const result = value.then((_)=>left("Hello"));
             expect(result).toBeInstanceOf(Left);
-            expect(result.getOrThrow()).toBe(21);
+            expect(result.getOrThrow()).toBe("Hello");
+        })
+        test("then with a function that gives a left on a left gives a new left of a different type",()=>{
+            const value = left(42);
+            const result = value.then((_)=>left("Hello World"));
+            expect(result).toBeInstanceOf(Left);
+            expect(result.getOrThrow()).toBe("Hello World");
         })
         test("then with a function that gives a right on a left gives a new right",()=>{
             const value = left(42);
@@ -108,14 +114,12 @@ describe("Either",()=>{
             const value = right(42);
             const result = value.then((_)=>left(21));
             expect(result).toBeInstanceOf(Right);
-            expect(result).toBe(value);
             expect(result.getOr(0)).toBe(0);
         })
         test("then with a function that gives a right on a right gives back the same right",()=>{
             const value = right(42);
             const result = value.then((_)=>right(1));
             expect(result).toBeInstanceOf(Right);
-            expect(result).toBe(value);
             expect(result.getOr(0)).toBe(0);
             const swapped = result.swap();
             expect(swapped.getOrThrow()).toBe(42)

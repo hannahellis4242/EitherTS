@@ -17,7 +17,7 @@ export default class Left<A,B>implements Either<A,B>{
     promisify(): Promise<A> {
         return Promise.resolve(this.data);
     }
-    then(fn: (x: A) => Either<A, B>): Either<A, B> {
+    then<C>(fn: (x: A) => Either<C,B>): Either<C,B> {
         return fn(this.data);
     }
     swap(): Either<B, A> {
